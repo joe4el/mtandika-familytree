@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class FamilyTreeController extends Controller
 {
-    // Show the Blade page with treeData
+    
     public function showPage()
     {
     $tree = DB::table('family_trees')->where('id', 1)->first();
@@ -22,7 +22,7 @@ class FamilyTreeController extends Controller
     return view('familyviews.familytree', compact('treeData'));
     }
 
-    // Return tree JSON (for AJAX / JS use)
+    
     public function index()
     {
         $tree = DB::table('family_trees')->where('id', 1)->first();
@@ -53,7 +53,6 @@ class FamilyTreeController extends Controller
     ];
     }
 
-    // Build tree dynamically from FamilyMember table
     public function getTree()
     {
         $members = FamilyMember::all();
@@ -73,7 +72,6 @@ class FamilyTreeController extends Controller
         return response()->json($tree[0] ?? null);
     }
 
-    // Save edits to family_trees table
     public function save(Request $request)
     {
         DB::table('family_trees')->updateOrInsert(

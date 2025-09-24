@@ -81,7 +81,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <h1>🌳 Six Generation Family Tree 🌳</h1>
+        <h1>🌳 MTANDIKA FAMILY TREE 🌳</h1>
 
         <div class="controls">
             <button id="editBtn">Edit</button>
@@ -95,7 +95,7 @@
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let editing = false;
 
-        let treeData = @json($treeData); // ✅ Loaded from DB via controller
+        let treeData = @json($treeData); // 
 
         function buildTree(node) {
             let html = `<li>
