@@ -95,7 +95,7 @@
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let editing = false;
 
-        let treeData = @json($treeData); // ✅ Loaded from DB via controller
+        let treeData = @json($treeData); // it will be loaded from db via controller
 
         function buildTree(node) {
             let html = `<li>
