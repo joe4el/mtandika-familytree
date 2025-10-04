@@ -9,18 +9,21 @@ use Illuminate\Support\Facades\DB;
 class FamilyTreeController extends Controller
 {
     
-    public function showPage()
-    {
+   public function showPage($id = null)
+{
     $tree = DB::table('family_trees')->where('id', 1)->first();
+    $treeData = $tree ? json_decode($tree->tree_data, true) : [];
 
-        if ($tree && $tree->tree_data) {
-        $treeData = json_decode($tree->tree_data, true);
-        } else {
-        $treeData = $this->generateFamilyTree();
-        }
-
-    return view('familyviews.familytree', compact('treeData'));
+    // If no ID, show root (id = "1")
+    if (!$id) {
+        $currentNode = $treeData;
+    } else {
+        // Find node by ID inside the tree
+        $currentNode = $this->findNodeById($treeData, $id);
     }
+
+    return view('familyviews.familytree', compact('currentNode'));
+}
 
     
     public function index()
@@ -71,6 +74,8 @@ class FamilyTreeController extends Controller
 
         return response()->json($tree[0] ?? null);
     }
+
+    
 
     public function save(Request $request)
     {
