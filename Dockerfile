@@ -26,6 +26,8 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+RUN php artisan migrate --force 
+
 # Expose port
 EXPOSE 10000
 
