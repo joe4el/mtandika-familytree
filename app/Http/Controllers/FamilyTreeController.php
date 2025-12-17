@@ -13,8 +13,14 @@ class FamilyTreeController extends Controller
         $tree = DB::table('family_trees')->where('id', 1)->first();
         $treeData = $tree ? json_decode($tree->tree_data, true) : [];
 
-        $currentNode = $id ? $this->findNodeById($treeData, $id) : $treeData;
-        if (!$currentNode) $currentNode = $treeData;
+        $currentNode = $treeData;
+
+        if ($id !== null) {
+            $foundNode = $this->findNodeById($treeData, $id);
+            if ($foundNode !== null) {
+                $currentNode = $foundNode;
+            }
+        }
 
         $parentId = $this->findParentId($treeData, $id);
 
@@ -24,7 +30,6 @@ class FamilyTreeController extends Controller
             'parentId' => $parentId, 
         ]);
     }
-
 
         public function show($id = null)
     {
@@ -300,21 +305,31 @@ class FamilyTreeController extends Controller
 
         private function findParentId($tree, $memberId, $parentId = null)
         {
-                if ($tree['id'] === $memberId) {
-                    return $parentId;
-                }
+            // ✅ Guard: skip invalid nodes without killing recursion
+            if (!is_array($tree)) {
+                return null;
+            }
 
-                if (!empty($tree['children'])) {
-                    foreach ($tree['children'] as $child) {
-                        $found = $this->findParentId($child, $memberId, $tree['id']);
-                        if ($found) {
-                            return $found;
-                        }
+            // ✅ Check current node safely
+            if (isset($tree['id']) && $tree['id'] === $memberId) {
+                return $parentId;
+            }
+
+            // ✅ Traverse children
+            if (!empty($tree['children']) && is_array($tree['children'])) {
+                foreach ($tree['children'] as $child) {
+                    $found = $this->findParentId($child, $memberId, $tree['id'] ?? null);
+
+                    // 🔑 IMPORTANT FIX
+                    if ($found !== null) {
+                        return $found;
                     }
                 }
+            }
 
-                return null;
+            return null;
         }
+
 
         private function updateBranch(&$node, $id, $newBranch)
         {

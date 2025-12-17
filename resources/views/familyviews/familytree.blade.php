@@ -423,26 +423,34 @@
     }
 
     document.addEventListener("click", function (e) {
-    if (e.target.closest(".member")) {
-        const id = e.target.closest(".member").dataset.id;
+        const member = e.target.closest(".member");
+
+        if (!member) return;
+
+        // Ignore clicks inside controls
+        if (e.target.closest('.member-options') || e.target.closest('.hover-card')) {
+            return;
+        }
+
+        const id = member.dataset.id;
         window.location.href = `/family-tree/${id}`;
-    }
-});
+    });
 
     function renderTree() {
-    const treeContainer = document.getElementById('tree');
-    treeContainer.innerHTML = buildTree(treeData);
+        const treeContainer = document.getElementById('tree');
+
+        if (!treeData || !treeData.id) {
+            treeContainer.innerHTML = "<p>❌ Tree data not available</p>";
+            return;
+        }
+
+        treeContainer.innerHTML = buildTree(treeData);
 
         if (deleteMode) {
             enableDeleteSelection();
         }
     }
 
-    function toggleEdit() {
-        editing = !editing;
-        deleteMode = false; 
-        renderTree();
-    }
 
     function collectTreeData(node) {
         const nameInput = document.querySelector(`input[data-id="${node.id}"]`);
