@@ -340,14 +340,12 @@
 
     <h1>🌳 MTANDIKA FAMILY TREE 🌳</h1>
 
-    @if(auth()->check() && auth()->user()->is_admin)
     <div class="controls">
         <button onclick="toggleEdit()">✏️ Edit</button>
         <button onclick="saveTree()">💾 Save</button>
         <button onclick="addChild()">➕ Add Child</button>
         <button onclick="deleteMember()">🗑️ Delete Member</button>
     </div>
-    @endif
 
     <div class="tree" id="tree"></div>
 
