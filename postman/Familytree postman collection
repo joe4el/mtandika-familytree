@@ -1,0 +1,507 @@
+{
+  "info": {
+    "name": "Family Tree API",
+    "description": "Complete API collection for Family Tree management system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "tree_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "member_id",
+      "value": "root",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Core CRUD",
+      "item": [
+        {
+          "name": "Get Entire Tree",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Member",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}"]
+            }
+          }
+        },
+        {
+          "name": "List All Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members"]
+            }
+          }
+        },
+        {
+          "name": "Create New Tree",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Smith Family Tree\",\n  \"root_member_name\": \"John Smith\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees"]
+            }
+          }
+        },
+        {
+          "name": "Initialize Tree with Sample Data",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/init",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "init"]
+            }
+          }
+        },
+        {
+          "name": "Update Member Complete",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe Smith\",\n  \"dob\": \"1990-01-15\",\n  \"dod\": null,\n  \"bio\": \"Updated biography text...\",\n  \"gender\": \"female\",\n  \"occupation\": \"Software Engineer\",\n  \"location\": \"New York, USA\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Tree",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Member Management",
+      "item": [
+        {
+          "name": "Add Child",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Child Name\",\n  \"dob\": \"2020-05-15\",\n  \"bio\": \"Optional biography\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/children",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "children"]
+            }
+          }
+        },
+        {
+          "name": "Update Member Name (Legacy)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"root-1\",\n  \"name\": \"Updated Name\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/members/update",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "members", "update"]
+            }
+          }
+        },
+        {
+          "name": "Update Member Field",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"field\": \"bio\",\n  \"value\": \"This is the updated biography...\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/members/{{member_id}}/field",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "members", "{{member_id}}", "field"]
+            }
+          }
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Relationships",
+      "item": [
+        {
+          "name": "Add Spouse",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spouse Name\",\n  \"marriage_date\": \"2015-06-20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/spouse",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "spouse"]
+            }
+          }
+        },
+        {
+          "name": "Add Parent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"relationship\": \"father\",\n  \"name\": \"Father Name\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/parents",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "parents"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search & Query",
+      "item": [
+        {
+          "name": "Search Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/search?q=john",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "john"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Ancestors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/ancestors",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "ancestors"]
+            }
+          }
+        },
+        {
+          "name": "Get Descendants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/descendants",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "descendants"]
+            }
+          }
+        },
+        {
+          "name": "Get Siblings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/{{member_id}}/siblings",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "{{member_id}}", "siblings"]
+            }
+          }
+        },
+        {
+          "name": "Get Generation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/generation/2",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "generation", "2"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bulk Operations",
+      "item": [
+        {
+          "name": "Batch Create Members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"members\": [\n    {\n      \"parent_id\": \"root\",\n      \"name\": \"Child 1\",\n      \"dob\": \"1990-01-15\",\n      \"bio\": \"First child bio\"\n    },\n    {\n      \"parent_id\": \"root\",\n      \"name\": \"Child 2\",\n      \"dob\": \"1992-05-20\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/batch",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "batch"]
+            }
+          }
+        },
+        {
+          "name": "Batch Update Members",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"updates\": [\n    {\n      \"id\": \"root-1\",\n      \"fields\": {\n        \"name\": \"Updated Name\",\n        \"bio\": \"Updated biography\"\n      }\n    },\n    {\n      \"id\": \"root-2\",\n      \"fields\": {\n        \"dob\": \"1995-03-15\",\n        \"occupation\": \"Engineer\"\n      }\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/batch",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "batch"]
+            }
+          }
+        },
+        {
+          "name": "Batch Delete Members",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"member_ids\": [\"root-1-2\", \"root-1-3\", \"root-2-1\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/members/batch",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "members", "batch"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Import/Export",
+      "item": [
+        {
+          "name": "Export Tree (JSON)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/export?format=json",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "export"],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Export Tree (CSV)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/export?format=csv",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "export"],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "csv"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Import Tree",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tree_data\": {\n    \"id\": \"imported-root\",\n    \"name\": \"Imported Member\",\n    \"children\": []\n  },\n  \"merge\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/import",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "import"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistics & Analytics",
+      "item": [
+        {
+          "name": "Get Tree Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/stats",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Get Timeline",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/timeline",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "timeline"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Validation",
+      "item": [
+        {
+          "name": "Validate Tree",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/family-trees/{{tree_id}}/validate",
+              "host": ["{{base_url}}"],
+              "path": ["family-trees", "{{tree_id}}", "validate"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
