@@ -31,7 +31,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Clear cache (NOW it will work)
-RUN php artisan optimize:clear
+RUN php artisan config:clear
 
 EXPOSE 80
 CMD ["apache2-foreground"]
